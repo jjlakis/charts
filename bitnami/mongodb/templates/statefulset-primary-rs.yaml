@@ -17,6 +17,16 @@ metadata:
 {{ toYaml . | indent 4 }}
   {{- end }}
 spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: release
+            operator: In
+            values:
+            - {{ .Release.Name }}-mongodb
+        topologyKey: failure-domain.beta.kubernetes.io/zone
   serviceName: {{ template "mongodb.fullname" . }}-headless
   replicas: 1
   updateStrategy:
