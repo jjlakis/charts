@@ -169,7 +169,7 @@ spec:
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           {{- end }}
           volumeMounts:
-          {{- if .Values.configmap }}
+          {{- if .Values.arbiterConfigmap }}
             - name: config
               mountPath: /opt/bitnami/mongodb/conf/mongodb.conf
               subPath: mongodb.conf
@@ -184,7 +184,7 @@ spec:
 {{ toYaml .Values.sidecarsArbiter | indent 8 }}
 {{- end }}
       volumes:
-      {{- if .Values.configmap }}
+      {{- if .Values.arbiterConfigmap }}
         - name: config
           configMap:
             name: {{ template "mongodb.fullname" . }}
